@@ -1,4 +1,4 @@
-package br.com.tokiomarine.seguradora.Controller;
+package br.com.tokiomarine.seguradora.controller;
 
 import java.util.List;
 
@@ -22,7 +22,6 @@ import br.com.tokiomarine.seguradora.utils.Utils;
 @RequestMapping("/api/client")
 public class ClientController {
 
-
     private final IClientRepository repository;
 
     public ClientController(IClientRepository repository, IAddressRepository IAddressRepository) {
@@ -34,12 +33,11 @@ public class ClientController {
         return ResponseEntity.ok("Pong Client");
     }
 
-
     @PostMapping("/")
     public ResponseEntity<?> createClient(@RequestBody Client newClient) {
         var client = repository.findByEmail(newClient.getEmail());
 
-        if(client != null) 
+        if (client != null)
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Cliente já existe");
 
         var clientCreated = repository.save(newClient);
@@ -48,21 +46,20 @@ public class ClientController {
     }
 
     @GetMapping("/")
-    public ResponseEntity<List<Client>> listClients () {
+    public ResponseEntity<List<Client>> listClients() {
         return ResponseEntity.ok(repository.findAll());
     }
-
 
     @PutMapping("/{idClient}")
     public ResponseEntity<?> updateClient(@RequestBody Client newInfosClient, @PathVariable Long idClient) {
         var client = repository.findById(idClient).orElse(null);
 
-        if(client == null) 
+        if (client == null)
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Cliente não encontrado");
 
         var clientEmail = repository.findByEmail(newInfosClient.getEmail());
 
-        if(clientEmail!=null && !clientEmail.getId().equals(client.getId()))
+        if (clientEmail != null && !clientEmail.getId().equals(client.getId()))
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Este email não pode ser utilizado");
 
         newInfosClient.setId(client.getId());
@@ -72,20 +69,19 @@ public class ClientController {
         var clientUpdated = repository.save(client);
 
         return ResponseEntity.ok(clientUpdated);
-        
+
     }
 
     @DeleteMapping("/{idClient}")
     public ResponseEntity<?> deleteClient(@PathVariable Long idClient) {
         var client = repository.findById(idClient).orElse(null);
 
-        if(client == null) 
+        if (client == null)
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Cliente não encontrado");
 
-
         repository.delete(client);
-            
+
         return ResponseEntity.ok("Cliente deletado com sucesso");
     }
-    
+
 }

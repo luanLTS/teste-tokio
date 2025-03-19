@@ -1,4 +1,4 @@
-package br.com.tokiomarine.seguradora.Controller;
+package br.com.tokiomarine.seguradora.controller;
 
 import java.util.Map;
 
