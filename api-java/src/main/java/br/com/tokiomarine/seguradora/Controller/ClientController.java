@@ -24,8 +24,11 @@ public class ClientController {
 
     private final IClientRepository repository;
 
-    public ClientController(IClientRepository repository, IAddressRepository IAddressRepository) {
+    private final IAddressRepository addressRepository;
+
+    public ClientController(IClientRepository repository, IAddressRepository addressRepository) {
         this.repository = repository;
+        this.addressRepository = addressRepository;
     }
 
     @GetMapping("/ping")
@@ -79,6 +82,9 @@ public class ClientController {
         if (client == null)
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Cliente não encontrado");
 
+        var addressesClient = addressRepository.findByClient(client);
+
+        addressRepository.deleteAll(addressesClient);
         repository.delete(client);
 
         return ResponseEntity.ok("Cliente deletado com sucesso");
