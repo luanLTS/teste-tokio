@@ -15,6 +15,7 @@ import br.com.tokiomarine.seguradora.dto.CreateAddressDto;
 import br.com.tokiomarine.seguradora.model.Address;
 import br.com.tokiomarine.seguradora.repository.IAddressRepository;
 import br.com.tokiomarine.seguradora.repository.IClientRepository;
+import br.com.tokiomarine.seguradora.service.AddressService;
 import br.com.tokiomarine.seguradora.utils.Utils;
 
 @RestController
@@ -23,10 +24,13 @@ public class AddressController {
 
     private final IAddressRepository repository;
     private final IClientRepository clientRepository;
+    private final AddressService service;
 
-    public AddressController(IAddressRepository repository, IClientRepository clientRepository) {
+    public AddressController(IAddressRepository repository, IClientRepository clientRepository,
+            AddressService service) {
         this.repository = repository;
         this.clientRepository = clientRepository;
+        this.service = service;
     }
 
     @GetMapping("/ping")
@@ -55,18 +59,7 @@ public class AddressController {
 
     @GetMapping("/")
     public ResponseEntity<?> listAddresses(@RequestParam Map<String, String> filterMap) {
-        try {
-            if (filterMap.containsKey("client_id")) {
-                var client = clientRepository.findById(Long.parseLong(filterMap.get("client_id")))
-                        .orElseThrow(() -> new NullPointerException("Cliente não encontrado"));
-                var list = repository.findByClient(client);
-                return ResponseEntity.ok(list);
-            }
+        return ResponseEntity.ok(service.listWithFilters(filterMap));
 
-            var list = repository.findAll();
-            return ResponseEntity.ok(list);
-        } catch (NullPointerException e) {
-            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(e.getMessage());
-        }
     }
 }
