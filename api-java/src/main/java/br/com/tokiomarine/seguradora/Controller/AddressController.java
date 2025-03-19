@@ -5,7 +5,9 @@ import java.util.Map;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -61,5 +63,21 @@ public class AddressController {
     public ResponseEntity<?> listAddresses(@RequestParam Map<String, String> filterMap) {
         return ResponseEntity.ok(service.listWithFilters(filterMap));
 
+    }
+
+    @PutMapping("/{idAddress}")
+    public ResponseEntity<?> updateAddress(@RequestBody Address newInfosAddress, @PathVariable Long idAddress) {
+        var address = repository.findById(idAddress).orElse(null);
+
+        if (address == null)
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Endereço não encontrado");
+
+        newInfosAddress.setId(idAddress);
+
+        Utils.copyNonNullProperties(newInfosAddress, address);
+
+        var addressUpdated = repository.save(address);
+
+        return ResponseEntity.ok(addressUpdated);
     }
 }
