@@ -6,5 +6,5 @@ import br.com.tokiomarine.seguradora.model.Client;
 
 public interface IClientRepository extends JpaRepository<Client, Long> {
 
-    
+    Client findByEmail(String email);
 }

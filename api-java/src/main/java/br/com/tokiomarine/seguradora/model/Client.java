@@ -6,6 +6,7 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
+import javax.validation.constraints.NotBlank;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -22,6 +23,7 @@ public class Client {
     @GeneratedValue(strategy=GenerationType.IDENTITY)
     private Long id;
     
+    @NotBlank
     @Column(name="first_name", nullable=false, columnDefinition="VARCHAR(250)")
     private String firstName;
 
