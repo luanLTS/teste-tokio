@@ -1,5 +1,7 @@
 package br.com.tokiomarine.seguradora.Controller;
 
+import java.util.List;
+
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -9,15 +11,17 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import br.com.tokiomarine.seguradora.model.Client;
+import br.com.tokiomarine.seguradora.repository.IAddressRepository;
 import br.com.tokiomarine.seguradora.repository.IClientRepository;
 
 @RestController
 @RequestMapping("/api/client")
 public class ClientController {
 
+
     private final IClientRepository repository;
 
-    public ClientController(IClientRepository repository) {
+    public ClientController(IClientRepository repository, IAddressRepository IAddressRepository) {
         this.repository = repository;
     }
 
@@ -37,6 +41,11 @@ public class ClientController {
         var clientCreated = repository.save(newClient);
 
         return ResponseEntity.status(HttpStatus.CREATED).body(clientCreated);
+    }
+
+    @GetMapping("/")
+    public ResponseEntity<List<Client>> listClients () {
+        return ResponseEntity.ok(repository.findAll());
     }
     
 }
