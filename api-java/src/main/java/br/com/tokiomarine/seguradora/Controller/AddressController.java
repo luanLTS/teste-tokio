@@ -1,11 +1,14 @@
 package br.com.tokiomarine.seguradora.Controller;
 
+import java.util.Map;
+
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import br.com.tokiomarine.seguradora.dto.CreateAddressDto;
@@ -48,5 +51,22 @@ public class AddressController {
 
         var addressCreated = repository.save(newAddress);
         return ResponseEntity.ok(addressCreated);
+    }
+
+    @GetMapping("/")
+    public ResponseEntity<?> listAddresses(@RequestParam Map<String, String> filterMap) {
+        try {
+            if (filterMap.containsKey("client_id")) {
+                var client = clientRepository.findById(Long.parseLong(filterMap.get("client_id")))
+                        .orElseThrow(() -> new NullPointerException("Cliente não encontrado"));
+                var list = repository.findByClient(client);
+                return ResponseEntity.ok(list);
+            }
+
+            var list = repository.findAll();
+            return ResponseEntity.ok(list);
+        } catch (NullPointerException e) {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(e.getMessage());
+        }
     }
 }
