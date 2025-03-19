@@ -14,38 +14,38 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 @Entity
-@Table(name="addresses")
+@Table(name = "addresses")
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
 public class Address {
-    
+
     @Id
-    @GeneratedValue(strategy=GenerationType.IDENTITY)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column(name="address", nullable=false, columnDefinition="VARCHAR(250)")
+    @Column(name = "address", nullable = false, columnDefinition = "VARCHAR(250)")
     private String address;
 
-    @Column(name="number", nullable=false, columnDefinition="VARCHAR(20)")
+    @Column(name = "number", nullable = false, columnDefinition = "VARCHAR(20)")
     private String number;
 
-    @Column(name="complement", nullable=true, columnDefinition="VARCHAR(250)")
+    @Column(name = "complement", nullable = true, columnDefinition = "VARCHAR(250)")
     private String complement;
 
-    @Column(name="postal_code", nullable=true, columnDefinition="VARCHAR(10)")
+    @Column(name = "postal_code", nullable = true, columnDefinition = "VARCHAR(10)")
     private String postalCode;
 
-    @Column(name="city", nullable=true, columnDefinition="VARCHAR(250)")
+    @Column(name = "city", nullable = true, columnDefinition = "VARCHAR(250)")
     private String city;
 
-    @Column(name="state", nullable=true, columnDefinition="VARCHAR(250)")
+    @Column(name = "state", nullable = true, columnDefinition = "VARCHAR(250)")
     private String state;
 
-    @Column(name="country", nullable=true, columnDefinition="VARCHAR(250)")
+    @Column(name = "country", nullable = true, columnDefinition = "VARCHAR(250)")
     private String country;
 
     @ManyToOne()
-    @JoinColumn(name="id_client")
+    @JoinColumn(name = "id_client")
     private Client client;
 }

@@ -15,13 +15,4 @@ public class ViaCepConsumer {
         var body = response.getBody();
         return body;
     }
-
-    public static ViaCepDto fetchByStateCityAddress(String state, String city, String address) {
-        var response = restTemplate.getForEntity(
-                "https://viacep.com.br/ws/" + state + "/" + city + "/" + address + "/json/", ViaCepDto.class);
-        if (response.getStatusCode().equals(HttpStatus.BAD_REQUEST))
-            return null;
-        var body = response.getBody();
-        return body;
-    }
 }

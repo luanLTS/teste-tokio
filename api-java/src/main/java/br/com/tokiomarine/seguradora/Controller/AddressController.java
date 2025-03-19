@@ -14,7 +14,9 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import br.com.tokiomarine.seguradora.consumer.ViaCepConsumer;
 import br.com.tokiomarine.seguradora.dto.CreateAddressDto;
+import br.com.tokiomarine.seguradora.mapper.AddressMapper;
 import br.com.tokiomarine.seguradora.model.Address;
 import br.com.tokiomarine.seguradora.repository.IAddressRepository;
 import br.com.tokiomarine.seguradora.repository.IClientRepository;
@@ -54,8 +56,13 @@ public class AddressController {
         newAddressDto.setIdClient(null);
 
         Utils.copyNonNullProperties(newAddressDto, newAddress);
-        newAddress.setClient(client);
 
+        if (newAddressDto.getPostalCode() != null && !newAddressDto.getPostalCode().isEmpty()) {
+            var viaCepReturn = ViaCepConsumer.fetchByPostalCode(newAddressDto.getPostalCode());
+            AddressMapper.toAddress(viaCepReturn, newAddress);
+        }
+
+        newAddress.setClient(client);
         var addressCreated = repository.save(newAddress);
         return ResponseEntity.ok(addressCreated);
     }
@@ -76,6 +83,11 @@ public class AddressController {
         newInfosAddress.setId(idAddress);
 
         Utils.copyNonNullProperties(newInfosAddress, address);
+
+        if (newInfosAddress.getPostalCode() != null && !newInfosAddress.getPostalCode().isEmpty()) {
+            var viaCepReturn = ViaCepConsumer.fetchByPostalCode(newInfosAddress.getPostalCode());
+            AddressMapper.toAddress(viaCepReturn, address);
+        }
 
         var addressUpdated = repository.save(address);
 
