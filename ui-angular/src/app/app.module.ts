@@ -18,6 +18,7 @@ import { MatToolbarModule } from '@angular/material/toolbar';
 
 import { CriarClienteComponent } from './components/criar-cliente/criar-cliente.component';
 import { ApiInterceptor } from './http-interceptos/api-interceptor';
+import { CriarEnderecoComponent } from './components/criar-endereco/criar-endereco.component';
 
 
 
@@ -27,6 +28,7 @@ import { ApiInterceptor } from './http-interceptos/api-interceptor';
     HomeComponent,
     CabecalhoComponent,
     CriarClienteComponent,
+    CriarEnderecoComponent,
   ],
   imports: [
     AppRoutingModule,

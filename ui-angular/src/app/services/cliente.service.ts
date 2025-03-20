@@ -14,4 +14,8 @@ export class ClienteService  {
     return this.http.get<Cliente[]>("/client/");
   }
 
+  deleteCliente(id: number): Observable<string> {
+    return this.http.delete<string>("/client/"+id, {responseType: "text" as "json"});
+  }
+
 }

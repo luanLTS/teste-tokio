@@ -29,10 +29,12 @@ export class HomeComponent implements OnInit {
     }
 
     onDeleteUsuario(id: number) {
+        this.clienteService.deleteCliente(id).subscribe(console.log);
         this.clientes = this.clientes.filter(c => c.id !== id);
     }
 
     onDeleteEndereco(id: number) {
+        this.enderecoService.deleteEndereco(id).subscribe(console.log);
         this.enderecos = this.enderecos.filter(e => e.id !== id);
     }
 

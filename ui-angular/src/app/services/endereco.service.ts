@@ -14,4 +14,8 @@ export class EnderecoService {
   getEnderecosCliente(clienteId:number): Observable<Endereco[]> {
     return this.http.get<Endereco[]>("/address/", {params: new HttpParams().set('client_id', clienteId.toString())});
   }
+
+  deleteEndereco(id: number): Observable<string> {
+    return this.http.delete<string>("/address/"+id, {responseType: "text" as "json"});
+  }
 }
