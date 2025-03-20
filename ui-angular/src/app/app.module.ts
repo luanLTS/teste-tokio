@@ -5,12 +5,15 @@ import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 
-import { HomeComponent } from './components/home/home.component'
 import { AboutComponent } from './components/about/about.component';
-
-
-import {MatToolbarModule} from '@angular/material/toolbar';
 import { CabecalhoComponent } from './components/cabecalho/cabecalho.component';
+import { HomeComponent } from './components/home/home.component'
+
+
+import {MatButtonModule} from '@angular/material/button';
+import {MatToolbarModule} from '@angular/material/toolbar';
+
+
 
 @NgModule({
   declarations: [
@@ -23,6 +26,7 @@ import { CabecalhoComponent } from './components/cabecalho/cabecalho.component';
     AppRoutingModule,
     BrowserModule,
     BrowserAnimationsModule,
+    MatButtonModule,
     MatToolbarModule
   ],
   providers: [],
