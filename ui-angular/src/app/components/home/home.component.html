@@ -16,6 +16,10 @@
                     </div>
                 </mat-panel-description>
             </mat-expansion-panel-header>
+            <button routerLink="/criar-endereco" mat-raised-button color="accent" >
+                <mat-icon>add</mat-icon>
+                Novo Endereço
+            </button>
             <table *ngIf="step === cliente.id" mat-table [dataSource]="enderecos" class="mat-elevation-z1 w-100">
                 <ng-container matColumnDef="id">
                     <th mat-header-cell *matHeaderCellDef> ID </th>
