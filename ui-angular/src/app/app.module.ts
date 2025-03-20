@@ -11,7 +11,11 @@ import { HomeComponent } from './components/home/home.component'
 
 
 import { MatButtonModule } from '@angular/material/button';
+import { MatExpansionModule } from '@angular/material/expansion';
+import { MatIconModule } from '@angular/material/icon';
+import { MatTableModule } from '@angular/material/table';
 import { MatToolbarModule } from '@angular/material/toolbar';
+
 import { CriarClienteComponent } from './components/criar-cliente/criar-cliente.component';
 import { ApiInterceptor } from './http-interceptos/api-interceptor';
 
@@ -30,10 +34,13 @@ import { ApiInterceptor } from './http-interceptos/api-interceptor';
     BrowserAnimationsModule,
     HttpClientModule,
     MatButtonModule,
+    MatExpansionModule,
+    MatIconModule,
+    MatTableModule,
     MatToolbarModule
   ],
   providers: [
-    {provide: HTTP_INTERCEPTORS, useClass: ApiInterceptor, multi: true}
+    { provide: HTTP_INTERCEPTORS, useClass: ApiInterceptor, multi: true }
   ],
   bootstrap: [AppComponent]
 })

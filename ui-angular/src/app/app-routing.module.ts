@@ -10,7 +10,11 @@ const routes: Routes = [
     component: HomeComponent
   },
   {
-    path: 'about',
+    path: 'criar-cliente',
+    component: CriarClienteComponent
+  },
+  {
+    path: 'criar-cliente/:id',
     component: CriarClienteComponent
   }
 ];
